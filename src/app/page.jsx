@@ -1,6 +1,3 @@
-import { Button } from "@nextui-org/button";
-import Ahora from '@/components/Ahora'
-
 function HomePage() {  
 
   return (
@@ -13,8 +10,6 @@ function HomePage() {
         Deleniti corporis molestiae consequuntur iste maiores quae doloribus, quod laborum corrupti temporibus, officiis quibusdam cupiditate eius tenetur totam labore iusto magni rem! Nobis officia ut nulla sunt porro, exercitationem facere.
         Modi numquam tempora aut corrupti? Quam amet consectetur quaerat accusantium? Maxime, ex asperiores, obcaecati nostrum voluptas cumque, atque provident beatae quisquam nesciunt iusto exercitationem quaerat ipsam eveniet inventore dolore vitae.
       </p>
-      <Button>Click</Button>
-      <Ahora/>
     </section>
   );
 }
