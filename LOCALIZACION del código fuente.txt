@@ -1,0 +1,6 @@
+# LOCALIZACION del código fuente para la implementación
+
+El código fuente de la aplicación se encuentra localizado dentro del directorio 
+"src/app/buscar-turnos/page.jsx"
+
+Dentro de ./buscar-turnos/ existe una carpeta [id]/ que representa un turno N que devuelve el cliente y vehiculo relacionado además del turno.
