@@ -10,8 +10,8 @@ function Navbar() {
         </h3>
         <ul className="flex gap-x-4 text-2xl font-bold text-sky-500">
             <li>
-              <Link href="/" className=" hover:text-sky-400">
-                Home
+              <Link href="/buscar-turnos" className=" hover:text-sky-400">
+                Buscar Turnos
               </Link>
             </li>
         </ul>
