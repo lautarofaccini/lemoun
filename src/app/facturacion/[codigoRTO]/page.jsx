@@ -1,34 +1,44 @@
 "use client";
 
+import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import PagoRTO from "@/components/PagoRTO";
 
-// Datos inventados
 const facturas = [
   {
     codigoRTO: "RTO001",
     fechaRev: "2024-01-10",
     patente: "ABC123",
     resultado: "Aprobado",
-    monto: "1500",
-    fecha: "2024-01-10",
+    monto: 1500,
   },
   {
     codigoRTO: "RTO002",
     fechaRev: "2024-02-15",
     patente: "DEF456",
-    resultado: "Rechazado",
-    monto: "0",
-    fecha: "2024-02-15",
+    resultado: "Aprobado",
+    monto: 1200,
   },
   {
     codigoRTO: "RTO003",
     fechaRev: "2024-03-20",
     patente: "GHI789",
     resultado: "Aprobado",
-    monto: "2000",
-    fecha: "2024-03-20",
+    monto: 2000,
   },
 ];
 
@@ -59,6 +69,7 @@ const vehiculos = [
 function DetalleFacturacion() {
   const router = useRouter();
   const { codigoRTO } = useParams();
+  const [dialogOpen, setDialogOpen] = useState(false); // Controla el estado del diálogo
 
   // Buscar la factura correspondiente
   const factura = facturas.find((f) => f.codigoRTO === codigoRTO);
@@ -79,12 +90,22 @@ function DetalleFacturacion() {
     );
   }
 
+  const handlePagoConfirmado = (metodoPago) => {
+    alert(`Pago confirmado con el método: ${metodoPago}`);
+    setDialogOpen(false); // Cierra el diálogo
+    router.push("/facturacion"); // Redirige a la página de facturación
+  };
+
   return (
     <div className="container mx-auto py-10 flex justify-center">
       <Card className="w-full max-w-2xl">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">RTO Nº {factura.codigoRTO}</CardTitle>
-          <CardDescription>Detalles de la facturación y el vehículo</CardDescription>
+          <CardTitle className="text-2xl font-bold">
+            Facturación de la RTO Nº {factura.codigoRTO}
+          </CardTitle>
+          <CardDescription>
+            Detalles de la facturación y el vehículo
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-6">
@@ -114,7 +135,7 @@ function DetalleFacturacion() {
               </dl>
             </div>
             <div className="space-y-2">
-              <h2 className="text-lg font-semibold">Datos del RTO</h2>
+              <h2 className="text-lg font-semibold">Datos de la RTO</h2>
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                 <div>
                   <dt className="font-medium">Resultado:</dt>
@@ -125,23 +146,35 @@ function DetalleFacturacion() {
                   <dd>${factura.monto}</dd>
                 </div>
                 <div>
-                  <dt className="font-medium">Fecha:</dt>
-                  <dd>{factura.fecha}</dd>
+                  <dt className="font-medium">Fecha de revisión:</dt>
+                  <dd>{factura.fechaRev}</dd>
                 </div>
               </dl>
             </div>
           </div>
           <div className="flex justify-between mt-6">
-          <Button variant="ghost" onClick={() => router.back()}>
+            <Button variant="ghost" onClick={() => router.back()}>
               Volver
             </Button>
             <div className="space-x-2">
               <Button variant="outline" onClick={() => alert("Editar RTO")}>
                 Editar
               </Button>
-              <Button onClick={() => alert("Pagar RTO")}>Pagar</Button>
+              <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                <AlertDialogTrigger asChild>
+                  <Button onClick={() => setDialogOpen(true)}>Pagar</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <PagoRTO
+                      factura={factura}
+                      onConfirm={handlePagoConfirmado}
+                      onClose={() => setDialogOpen(false)}
+                    />
+                  </AlertDialogHeader>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
-            
           </div>
         </CardContent>
       </Card>
@@ -150,4 +183,3 @@ function DetalleFacturacion() {
 }
 
 export default DetalleFacturacion;
-

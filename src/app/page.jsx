@@ -13,9 +13,9 @@ function HomePage() {
         </Link>
         <Link
           className="w-full py-2 border border-gray-300 rounded-lg text-center hover:bg-gray-800 transition-colors"
-          href="/obleas"
+          href="/resultados"
         >
-          Obleas
+          Resultados
         </Link>
         <Link
           className="w-full py-2 border border-gray-300 rounded-lg text-center hover:bg-gray-800 transition-colors"
