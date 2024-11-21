@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-function BuscarTurnos() {
+function Turnos() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortCriteria, setSortCriteria] = useState("fecha"); // Criterio para ordenar
   const [turnos, setTurnos] = useState([
@@ -82,7 +82,7 @@ function BuscarTurnos() {
         {sortedTurnos.map((turno) => (
           <li
             key={turno.id}
-            onClick={() => router.push(`/buscar-turnos/${turno.id}`)}
+            onClick={() => router.push(`/turnos/${turno.id}`)}
             className="mb-4 p-4 border border-gray-300 rounded-lg hover:bg-gray-800 hover:text-white transition-colors cursor-pointer"
           >
             <div>
@@ -109,4 +109,4 @@ function BuscarTurnos() {
   );
 }
 
-export default BuscarTurnos;
+export default Turnos;
