@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +17,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import PagoRTO from "@/components/PagoRTO";
+import { LoadingPago } from "@/components/LoadingPago";
 
 const facturas = [
   {
@@ -69,6 +70,7 @@ const vehiculos = [
 function DetalleFacturacion() {
   const router = useRouter();
   const { codigoRTO } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false); // Controla el estado del diálogo
 
   // Buscar la factura correspondiente
@@ -91,9 +93,14 @@ function DetalleFacturacion() {
   }
 
   const handlePagoConfirmado = (metodoPago) => {
-    alert(`Pago confirmado con el método: ${metodoPago}`);
-    setDialogOpen(false); // Cierra el diálogo
-    router.push("/facturacion"); // Redirige a la página de facturación
+    setIsLoading(true);
+    setDialogOpen(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+      setDialogOpen(false);
+      router.push("/facturacion");
+    }, 2000);
   };
 
   return (
@@ -162,16 +169,20 @@ function DetalleFacturacion() {
               </Button>
               <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <AlertDialogTrigger asChild>
-                  <Button onClick={() => setDialogOpen(true)}>Pagar</Button>
+                  <Button>Pagar</Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <PagoRTO
-                      factura={factura}
-                      onConfirm={handlePagoConfirmado}
-                      onClose={() => setDialogOpen(false)}
-                    />
-                  </AlertDialogHeader>
+                  {isLoading ? (
+                    <LoadingPago />
+                  ) : (
+                    <AlertDialogHeader>
+                      <PagoRTO
+                        factura={factura}
+                        onConfirm={handlePagoConfirmado}
+                        onClose={() => setDialogOpen(false)}
+                      />
+                    </AlertDialogHeader>
+                  )}
                 </AlertDialogContent>
               </AlertDialog>
             </div>

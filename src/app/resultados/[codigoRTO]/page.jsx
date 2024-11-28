@@ -20,7 +20,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Loading } from "@/components/Loading";
+import { LoadingOblea } from "@/components/LoadingOblea";
 import { useEffect, useState } from "react";
 
 // Datos simulados
@@ -91,7 +91,7 @@ function ResultadoRTO() {
       const timer = setTimeout(() => {
         setIsLoading(false);
         router.push("/");
-      }, 10000);
+      }, 2000);
 
       return () => clearTimeout(timer);
     }
@@ -202,7 +202,7 @@ function ResultadoRTO() {
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   {isLoading ? (
-                    <Loading />
+                    <LoadingOblea />
                   ) : (
                     <>
                       <AlertDialogHeader>

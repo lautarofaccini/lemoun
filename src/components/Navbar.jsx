@@ -1,19 +1,27 @@
 "use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 function Navbar() {
+  const pathname = usePathname();
   return (
     <nav className="bg-zinc-950 text-white py-3 mb-2">
       <div className="container mx-auto flex items-center justify-between">
-        <h3 className="font-bold text-3xl  text-sky-100 hover:text-white">
-          <Link href="/">LeMoUn</Link>
-        </h3>
-        <ul className="flex gap-x-4 text-2xl font-bold text-sky-500">
-          <li>
-            <Link href="/login" className=" hover:text-sky-400">
-              Cerrar Sesión
-            </Link>
-          </li>
+        <Link href="/" className="flex items-center">
+          <img src="/logo.png" alt="LeMoUn" className="h-20 w-auto" />
+        </Link>
+        <ul className="flex gap-x-4 ">
+          {pathname !== "/login" && (
+            <li>
+              <Link
+                className="w-full text-xl font-bold px-4 py-2 border border-gray-300 rounded-lg text-center hover:bg-gray-800 transition-colors"
+                href="/logout"
+              >
+                Cerrar Sesión
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
     </nav>

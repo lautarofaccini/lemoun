@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 function BuscarResultadosRTO() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortCriteria, setSortCriteria] = useState("fecha"); // Criterio para ordenar
+  const [sortCriteria, setSortCriteria] = useState("fecha");
   const [resultados, setResultados] = useState([
     {
       codigoRTO: "RTO001",
