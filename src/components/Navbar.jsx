@@ -10,7 +10,7 @@ function Navbar() {
         </h3>
         <ul className="flex gap-x-4 text-2xl font-bold text-sky-500">
           <li>
-            <Link href="/login" className=" hover:text-sky-400">
+            <Link href="/logout" className=" hover:text-sky-400">
               Cerrar Sesión
             </Link>
           </li>

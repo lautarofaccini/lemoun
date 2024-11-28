@@ -1,9 +1,30 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Cookies from "js-cookie";
+
 function LoginPage() {
+  const router = useRouter();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    // Establece la cookie de autenticación
+    Cookies.set("authToken", "your-auth-token", { path: "/", expires: 1 }); // 1 día
+
+    // Redirige al dashboard con una recarga completa para garantizar que el middleware detecte la cookie
+    router.replace("/");
+    window.location.reload();
+  };
+
   return (
     <section className="h-full flex flex-col justify-center items-center">
       <div className="w-full max-w-md border border-gray-300 rounded-lg p-6">
         <h1 className="text-3xl mb-7 py-5 text-center">Iniciar Sesión</h1>
-        <form>
+        <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label
               htmlFor="username"
@@ -16,6 +37,8 @@ function LoginPage() {
               id="username"
               name="username"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>
@@ -31,6 +54,8 @@ function LoginPage() {
               id="password"
               name="password"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
@@ -41,12 +66,6 @@ function LoginPage() {
             Acceder
           </button>
         </form>
-        <p className="text-center mt-4 text-sm">
-          ¿Aún no tiene una cuenta?{" "}
-          <a href="/register" className="text-blue-600 hover:underline">
-            Registrarse
-          </a>
-        </p>
       </div>
     </section>
   );
