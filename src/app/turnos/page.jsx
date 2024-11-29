@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 function Turnos() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -60,6 +61,9 @@ function Turnos() {
 
   return (
     <div className="h-full flex flex-col justify-center items-center">
+      <Button variant="outline" onClick={() => router.back()}>
+        Volver
+      </Button>
       <h1 className="text-5xl mb-7 py-5">Buscar Turnos</h1>
       <div className="mb-6 w-full max-w-md flex items-center gap-4">
         <input

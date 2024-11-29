@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 function BuscarResultadosRTO() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -42,13 +43,17 @@ function BuscarResultadosRTO() {
 
   // Ordenar resultados según el criterio seleccionado
   const sortedResultados = filteredResultados.sort((a, b) => {
-    if (sortCriteria === "fecha") return new Date(a.fechaRev) - new Date(b.fechaRev);
+    if (sortCriteria === "fecha")
+      return new Date(a.fechaRev) - new Date(b.fechaRev);
     if (sortCriteria === "patente") return a.patente.localeCompare(b.patente);
     return 0;
   });
 
   return (
     <div className="h-full flex flex-col justify-center items-center">
+      <Button variant="outline" onClick={() => router.back()}>
+        Volver
+      </Button>
       <h1 className="text-5xl mb-7 py-5">Resultados del RTO</h1>
       <div className="mb-6 w-full max-w-md flex items-center gap-4">
         <input
