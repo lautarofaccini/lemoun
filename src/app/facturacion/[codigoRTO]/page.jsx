@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import PagoRTO from "@/components/PagoRTO";
 import { LoadingPago } from "@/components/LoadingPago";
+import { LoadingContado } from "@/components/LoadingContado";
+import { SuccessPago } from "@/components/SuccessPago";
 
 const facturas = [
   {
@@ -72,6 +74,8 @@ function DetalleFacturacion() {
   const { codigoRTO } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false); // Controla el estado del diálogo
+  const [metodoPago, setMetodoPago] = useState("");
+  const [showSuccessPago, setShowSuccessPago] = useState(false);
 
   // Buscar la factura correspondiente
   const factura = facturas.find((f) => f.codigoRTO === codigoRTO);
@@ -95,100 +99,110 @@ function DetalleFacturacion() {
   const handlePagoConfirmado = (metodoPago) => {
     setIsLoading(true);
     setDialogOpen(true);
+    setMetodoPago(metodoPago);
 
     setTimeout(() => {
       setIsLoading(false);
       setDialogOpen(false);
-      router.push("/facturacion");
+      setShowSuccessPago(true);
+      //router.push("/facturacion");
     }, 2000);
   };
 
   return (
     <div className="container mx-auto py-10 flex justify-center">
-      <Card className="w-full max-w-2xl">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">
-            Facturación de la RTO Nº {factura.codigoRTO}
-          </CardTitle>
-          <CardDescription>
-            Detalles de la facturación y el vehículo
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-6">
-            <div className="space-y-2">
-              <h2 className="text-lg font-semibold">Datos del vehículo</h2>
-              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                <div>
-                  <dt className="font-medium">Tipo:</dt>
-                  <dd>{vehiculo.tipo}</dd>
-                </div>
-                <div>
-                  <dt className="font-medium">Modelo:</dt>
-                  <dd>{vehiculo.modelo}</dd>
-                </div>
-                <div>
-                  <dt className="font-medium">Marca:</dt>
-                  <dd>{vehiculo.marca}</dd>
-                </div>
-                <div>
-                  <dt className="font-medium">Año:</dt>
-                  <dd>{vehiculo.año}</dd>
-                </div>
-                <div>
-                  <dt className="font-medium">Patente:</dt>
-                  <dd>{vehiculo.patente}</dd>
-                </div>
-              </dl>
+      {showSuccessPago ? (
+        <SuccessPago onAccept={() => router.push("/facturacion")} />
+      ) : (
+        <Card className="w-full max-w-2xl">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold">
+              Facturación de la RTO Nº {factura.codigoRTO}
+            </CardTitle>
+            <CardDescription>
+              Detalles de la facturación y el vehículo
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-6">
+              <div className="space-y-2">
+                <h2 className="text-lg font-semibold">Datos del vehículo</h2>
+                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                  <div>
+                    <dt className="font-medium">Tipo:</dt>
+                    <dd>{vehiculo.tipo}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-medium">Modelo:</dt>
+                    <dd>{vehiculo.modelo}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-medium">Marca:</dt>
+                    <dd>{vehiculo.marca}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-medium">Año:</dt>
+                    <dd>{vehiculo.año}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-medium">Patente:</dt>
+                    <dd>{vehiculo.patente}</dd>
+                  </div>
+                </dl>
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-lg font-semibold">Datos de la RTO</h2>
+                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                  <div>
+                    <dt className="font-medium">Resultado:</dt>
+                    <dd>{factura.resultado}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-medium">Monto:</dt>
+                    <dd>${factura.monto}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-medium">Fecha de revisión:</dt>
+                    <dd>{factura.fechaRev}</dd>
+                  </div>
+                </dl>
+              </div>
             </div>
-            <div className="space-y-2">
-              <h2 className="text-lg font-semibold">Datos de la RTO</h2>
-              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                <div>
-                  <dt className="font-medium">Resultado:</dt>
-                  <dd>{factura.resultado}</dd>
-                </div>
-                <div>
-                  <dt className="font-medium">Monto:</dt>
-                  <dd>${factura.monto}</dd>
-                </div>
-                <div>
-                  <dt className="font-medium">Fecha de revisión:</dt>
-                  <dd>{factura.fechaRev}</dd>
-                </div>
-              </dl>
-            </div>
-          </div>
-          <div className="flex justify-between mt-6">
-            <Button variant="ghost" onClick={() => router.back()}>
-              Volver
-            </Button>
-            <div className="space-x-2">
-              <Button variant="outline" onClick={() => alert("Editar RTO")}>
-                Editar
+            <div className="flex justify-between mt-6">
+              <Button variant="ghost" onClick={() => router.back()}>
+                Volver
               </Button>
-              <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                <AlertDialogTrigger asChild>
-                  <Button>Pagar</Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  {isLoading ? (
-                    <LoadingPago />
-                  ) : (
-                    <AlertDialogHeader>
-                      <PagoRTO
-                        factura={factura}
-                        onConfirm={handlePagoConfirmado}
-                        onClose={() => setDialogOpen(false)}
-                      />
-                    </AlertDialogHeader>
-                  )}
-                </AlertDialogContent>
-              </AlertDialog>
+              <div className="space-x-2">
+                <Button variant="outline" onClick={() => alert("Editar RTO")}>
+                  Editar
+                </Button>
+                <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                  <AlertDialogTrigger asChild>
+                    <Button>Pagar</Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    {isLoading ? (
+                      metodoPago === "Efectivo" ? (
+                        <LoadingContado />
+                      ) : (
+                        <LoadingPago />
+                      )
+                    ) : (
+                      <AlertDialogHeader>
+                        <PagoRTO
+                          factura={factura}
+                          onConfirm={handlePagoConfirmado}
+                          onClose={() => setDialogOpen(false)}
+                        />
+                      </AlertDialogHeader>
+                    )}
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

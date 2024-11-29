@@ -51,7 +51,7 @@ function BuscarResultadosRTO() {
 
   return (
     <div className="h-full flex flex-col justify-center items-center">
-      <Button variant="outline" onClick={() => router.back()}>
+      <Button variant="outline" onClick={() => router.push("/")}>
         Volver
       </Button>
       <h1 className="text-5xl mb-7 py-5">Resultados del RTO</h1>
