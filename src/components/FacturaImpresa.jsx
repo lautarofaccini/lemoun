@@ -9,9 +9,11 @@ function FacturaImpresa({ onAccept }) {
       <Card className="w-full max-w-sm bg-gray-900 text-white rounded-lg shadow-xl">
         <CardContent className="text-center p-6">
           <CheckCircle className="h-16 w-16 text-green-400 mx-auto" />
-          <h1 className="mt-4 text-2xl font-semibold">¡Impresión realizada correctamente!</h1>
+          <h1 className="mt-4 text-2xl font-semibold">
+            ¡Impresión realizada correctamente!
+          </h1>
           <p className="mt-2 text-sm text-gray-400">
-            Verifique que la factura se haya impreso correctamente en la impresora.
+            Verifique que la impresión.
           </p>
           <Button
             variant="outline"
