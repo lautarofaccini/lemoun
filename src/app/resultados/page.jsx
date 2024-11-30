@@ -51,9 +51,6 @@ function BuscarResultadosRTO() {
 
   return (
     <div className="h-full flex flex-col justify-center items-center">
-      <Button variant="outline" onClick={() => router.push("/")}>
-        Volver
-      </Button>
       <h1 className="text-5xl mb-7 py-5">Resultados del RTO</h1>
       <div className="mb-6 w-full max-w-md flex items-center gap-4">
         <input
@@ -96,6 +93,15 @@ function BuscarResultadosRTO() {
                 <strong>Monto:</strong> ${resultado.monto.toFixed(2)}
               </p>
             </div>
+            <div className="text-right">
+                  <Button
+                    onClick={() =>
+                      router.push(`/resultados/${resultado.codigoRTO}`)
+                    }
+                  >
+                    Ver
+                  </Button>
+              </div>
           </li>
         ))}
         {sortedResultados.length === 0 && (
@@ -104,6 +110,9 @@ function BuscarResultadosRTO() {
           </p>
         )}
       </ul>
+      <Button variant="outline" onClick={() => router.back()}>
+        Volver
+      </Button>
     </div>
   );
 }
