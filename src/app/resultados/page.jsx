@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 function BuscarResultadosRTO() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -91,6 +92,15 @@ function BuscarResultadosRTO() {
                 <strong>Monto:</strong> ${resultado.monto.toFixed(2)}
               </p>
             </div>
+            <div className="text-right">
+                  <Button
+                    onClick={() =>
+                      router.push(`/resultados/${resultado.codigoRTO}`)
+                    }
+                  >
+                    Ver
+                  </Button>
+                </div>
           </li>
         ))}
         {sortedResultados.length === 0 && (
@@ -99,6 +109,9 @@ function BuscarResultadosRTO() {
           </p>
         )}
       </ul>
+      <Button variant="outline" onClick={() => router.back()}>
+        Volver
+      </Button>
     </div>
   );
 }
