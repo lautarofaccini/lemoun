@@ -19,7 +19,6 @@ import {
 import PagoRTO from "@/components/PagoRTO";
 import { LoadingPago } from "@/components/LoadingPago";
 import { LoadingContado } from "@/components/LoadingContado";
-import { SuccessPago } from "@/components/SuccessPago";
 
 const facturas = [
   {
@@ -104,105 +103,100 @@ function DetalleFacturacion() {
     setTimeout(() => {
       setIsLoading(false);
       setDialogOpen(false);
-      setShowSuccessPago(true);
-      //router.push("/facturacion");
+      router.push("/facturacion");
     }, 2000);
   };
 
   return (
     <div className="container mx-auto py-10 flex justify-center">
-      {showSuccessPago ? (
-        <SuccessPago onAccept={() => router.push("/facturacion")} />
-      ) : (
-        <Card className="w-full max-w-2xl">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold">
-              Facturación de la RTO Nº {factura.codigoRTO}
-            </CardTitle>
-            <CardDescription>
-              Detalles de la facturación y el vehículo
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-6">
-              <div className="space-y-2">
-                <h2 className="text-lg font-semibold">Datos del vehículo</h2>
-                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                  <div>
-                    <dt className="font-medium">Tipo:</dt>
-                    <dd>{vehiculo.tipo}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-medium">Modelo:</dt>
-                    <dd>{vehiculo.modelo}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-medium">Marca:</dt>
-                    <dd>{vehiculo.marca}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-medium">Año:</dt>
-                    <dd>{vehiculo.año}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-medium">Patente:</dt>
-                    <dd>{vehiculo.patente}</dd>
-                  </div>
-                </dl>
-              </div>
-              <div className="space-y-2">
-                <h2 className="text-lg font-semibold">Datos de la RTO</h2>
-                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                  <div>
-                    <dt className="font-medium">Resultado:</dt>
-                    <dd>{factura.resultado}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-medium">Monto:</dt>
-                    <dd>${factura.monto}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-medium">Fecha de revisión:</dt>
-                    <dd>{factura.fechaRev}</dd>
-                  </div>
-                </dl>
-              </div>
+      <Card className="w-full max-w-2xl">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold">
+            Facturación de la RTO Nº {factura.codigoRTO}
+          </CardTitle>
+          <CardDescription>
+            Detalles de la facturación y el vehículo
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-6">
+            <div className="space-y-2">
+              <h2 className="text-lg font-semibold">Datos del vehículo</h2>
+              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                <div>
+                  <dt className="font-medium">Tipo:</dt>
+                  <dd>{vehiculo.tipo}</dd>
+                </div>
+                <div>
+                  <dt className="font-medium">Modelo:</dt>
+                  <dd>{vehiculo.modelo}</dd>
+                </div>
+                <div>
+                  <dt className="font-medium">Marca:</dt>
+                  <dd>{vehiculo.marca}</dd>
+                </div>
+                <div>
+                  <dt className="font-medium">Año:</dt>
+                  <dd>{vehiculo.año}</dd>
+                </div>
+                <div>
+                  <dt className="font-medium">Patente:</dt>
+                  <dd>{vehiculo.patente}</dd>
+                </div>
+              </dl>
             </div>
-            <div className="flex justify-between mt-6">
-              <Button variant="ghost" onClick={() => router.back()}>
-                Volver
+            <div className="space-y-2">
+              <h2 className="text-lg font-semibold">Datos de la RTO</h2>
+              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                <div>
+                  <dt className="font-medium">Resultado:</dt>
+                  <dd>{factura.resultado}</dd>
+                </div>
+                <div>
+                  <dt className="font-medium">Monto:</dt>
+                  <dd>${factura.monto}</dd>
+                </div>
+                <div>
+                  <dt className="font-medium">Fecha de revisión:</dt>
+                  <dd>{factura.fechaRev}</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+          <div className="flex justify-between mt-6">
+            <Button variant="ghost" onClick={() => router.back()}>
+              Volver
+            </Button>
+            <div className="space-x-2">
+              <Button variant="outline" onClick={() => alert("Editar RTO")}>
+                Editar
               </Button>
-              <div className="space-x-2">
-                <Button variant="outline" onClick={() => alert("Editar RTO")}>
-                  Editar
-                </Button>
-                <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                  <AlertDialogTrigger asChild>
-                    <Button>Pagar</Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    {isLoading ? (
-                      metodoPago === "Efectivo" ? (
-                        <LoadingContado />
-                      ) : (
-                        <LoadingPago />
-                      )
+              <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                <AlertDialogTrigger asChild>
+                  <Button>Pagar</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  {isLoading ? (
+                    metodoPago === "Efectivo" ? (
+                      <LoadingContado />
                     ) : (
-                      <AlertDialogHeader>
-                        <PagoRTO
-                          factura={factura}
-                          onConfirm={handlePagoConfirmado}
-                          onClose={() => setDialogOpen(false)}
-                        />
-                      </AlertDialogHeader>
-                    )}
-                  </AlertDialogContent>
-                </AlertDialog>
-              </div>
+                      <LoadingPago />
+                    )
+                  ) : (
+                    <AlertDialogHeader>
+                      <PagoRTO
+                        factura={factura}
+                        onConfirm={handlePagoConfirmado}
+                        onClose={() => setDialogOpen(false)}
+                      />
+                    </AlertDialogHeader>
+                  )}
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
-          </CardContent>
-        </Card>
-      )}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
