@@ -13,7 +13,7 @@ function FacturaImpresa({ onAccept }) {
             ¡Impresión realizada correctamente!
           </h1>
           <p className="mt-2 text-sm text-gray-400">
-            Verifique que la impresión.
+            Verifique la impresión.
           </p>
           <Button
             variant="outline"
