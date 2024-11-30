@@ -92,7 +92,7 @@ function Facturacion() {
                 No se encontraron resultados.
               </p>
             )}
-            <Button variant="outline" onClick={() => router.back()}>
+            <Button variant="outline" onClick={() => router.push("/")}>
               Volver
             </Button>
           </div>

@@ -37,7 +37,7 @@ function PagoRTO({ factura, onConfirm, onClose }) {
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="efectivo" id="efectivo" />
                   <label htmlFor="efectivo" className="text-sm">
-                    Efectivo
+                    Pago al Contado
                   </label>
                 </div>
                 <div className="flex items-center space-x-2">

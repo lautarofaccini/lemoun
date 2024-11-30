@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 function Turnos() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -99,12 +100,24 @@ function Turnos() {
                 <strong>Precio:</strong> ${turno.precio.toFixed(2)}
               </p>
             </div>
+            <div className="text-right">
+                  <Button
+                    onClick={() =>
+                      router.push(`/turnos/${turno.patente}`)
+                    }
+                  >
+                    Ver
+                  </Button>
+                </div>
           </li>
         ))}
         {sortedTurnos.length === 0 && (
           <p className="text-center text-gray-500">No se encontraron turnos.</p>
         )}
       </ul>
+      <Button variant="outline" onClick={() => router.back()}>
+        Volver
+      </Button>
     </div>
   );
 }

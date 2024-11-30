@@ -189,7 +189,11 @@ function DetalleFacturacion() {
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   {isLoading ? (
-                    <LoadingPago />
+                    metodoPago === "Efectivo" ? (
+                      <LoadingContado />
+                    ) : (
+                      <LoadingPago />
+                    )
                   ) : (
                     <AlertDialogHeader>
                       <PagoRTO

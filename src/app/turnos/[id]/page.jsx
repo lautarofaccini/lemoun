@@ -206,10 +206,12 @@ function TurnoDetalles() {
               </dl>
             </div>
           </div>
-          <div className="mt-6 flex justify-end">
-            <Button variant="outline" onClick={() => router.back()}>
-              Volver
-            </Button>
+          <div className="mt-6">
+            <div className="flex text-left">
+              <Button variant="outline" onClick={() => router.back()}>
+                Volver
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>

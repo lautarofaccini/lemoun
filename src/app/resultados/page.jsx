@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 function BuscarResultadosRTO() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -42,7 +43,8 @@ function BuscarResultadosRTO() {
 
   // Ordenar resultados según el criterio seleccionado
   const sortedResultados = filteredResultados.sort((a, b) => {
-    if (sortCriteria === "fecha") return new Date(a.fechaRev) - new Date(b.fechaRev);
+    if (sortCriteria === "fecha")
+      return new Date(a.fechaRev) - new Date(b.fechaRev);
     if (sortCriteria === "patente") return a.patente.localeCompare(b.patente);
     return 0;
   });
@@ -91,6 +93,15 @@ function BuscarResultadosRTO() {
                 <strong>Monto:</strong> ${resultado.monto.toFixed(2)}
               </p>
             </div>
+            <div className="text-right">
+                  <Button
+                    onClick={() =>
+                      router.push(`/resultados/${resultado.codigoRTO}`)
+                    }
+                  >
+                    Ver
+                  </Button>
+              </div>
           </li>
         ))}
         {sortedResultados.length === 0 && (
@@ -99,6 +110,9 @@ function BuscarResultadosRTO() {
           </p>
         )}
       </ul>
+      <Button variant="outline" onClick={() => router.back()}>
+        Volver
+      </Button>
     </div>
   );
 }
