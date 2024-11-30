@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import PagoRTO from "@/components/PagoRTO";
 import { LoadingPago } from "@/components/LoadingPago";
-import { LoadingContado } from "@/components/LoadingContado";
+import { ResultadoPago } from "@/components/ResultadoPago";
 
 const facturas = [
   {
@@ -72,11 +72,10 @@ function DetalleFacturacion() {
   const router = useRouter();
   const { codigoRTO } = useParams();
   const [isLoading, setIsLoading] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false); // Controla el estado del diálogo
-  const [metodoPago, setMetodoPago] = useState("");
-  const [showSuccessPago, setShowSuccessPago] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [showResultadoPago, setShowResultadoPago] = useState(false);
+  const [metodoPago, setMetodoPago] = useState(null);
 
-  // Buscar la factura correspondiente
   const factura = facturas.find((f) => f.codigoRTO === codigoRTO);
   const vehiculo = vehiculos.find((v) => v.patente === factura?.patente);
 
@@ -95,16 +94,29 @@ function DetalleFacturacion() {
     );
   }
 
-  const handlePagoConfirmado = (metodoPago) => {
-    setIsLoading(true);
-    setDialogOpen(true);
-    setMetodoPago(metodoPago);
-
-    setTimeout(() => {
-      setIsLoading(false);
+  const handlePagoConfirmado = (metodo) => {
+    setMetodoPago(metodo);
+    if (metodo === "efectivo") {
       setDialogOpen(false);
-      router.push("/facturacion");
-    }, 2000);
+      setShowResultadoPago(true); // Mostrar resultado directamente
+    } else {
+      setIsLoading(true); // Iniciar carga para tarjeta
+      setDialogOpen(true);
+
+      setTimeout(() => {
+        setIsLoading(false);
+        setDialogOpen(false);
+        setShowResultadoPago(true);
+      }, 4000); // Simula el tiempo del proceso
+    }
+  };
+
+  const handleResultadoCerrado = () => {
+    setShowResultadoPago(false);
+  };
+
+  const handlePagoExitoso = () => {
+    router.push("/facturacion");
   };
 
   return (
@@ -197,6 +209,15 @@ function DetalleFacturacion() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Modal de resultado */}
+      {showResultadoPago && (
+        <ResultadoPago
+          metodoPago={metodoPago} // Pasamos el método de pago
+          onClose={handleResultadoCerrado}
+          onPagoExitoso={handlePagoExitoso}
+        />
+      )}
     </div>
   );
 }

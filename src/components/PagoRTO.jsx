@@ -12,7 +12,7 @@ function PagoRTO({ factura, onConfirm, onClose }) {
       alert("Por favor, selecciona un medio de pago.");
       return;
     }
-    onConfirm(metodoPago); // Llama a la función del componente padre
+    onConfirm(metodoPago);
   };
 
   return (
@@ -35,19 +35,19 @@ function PagoRTO({ factura, onConfirm, onClose }) {
                 className="flex space-x-4 mt-2"
               >
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="Efectivo" id="efectivo" />
+                  <RadioGroupItem value="efectivo" id="efectivo" />
                   <label htmlFor="efectivo" className="text-sm">
                     Pago al Contado
                   </label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="Débito" id="debito" />
+                  <RadioGroupItem value="débito" id="debito" />
                   <label htmlFor="debito" className="text-sm">
                     Débito
                   </label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="Crédito" id="credito" />
+                  <RadioGroupItem value="crédito" id="credito" />
                   <label htmlFor="credito" className="text-sm">
                     Crédito
                   </label>
