@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { LoadingOblea } from "@/components/LoadingOblea";
 import { useEffect, useState } from "react";
+import FacturaImpresa from "@/components/FacturaImpresa";
 
 // Datos simulados
 const resultados = [
@@ -81,6 +82,7 @@ function ResultadoRTO() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [showFacturaImpresa, setShowFacturaImpresa] = useState(false);
 
   // Buscar datos correspondientes
   const resultado = resultados.find((f) => f.codigoRTO === codigoRTO);
@@ -90,7 +92,7 @@ function ResultadoRTO() {
     if (isLoading) {
       const timer = setTimeout(() => {
         setIsLoading(false);
-        router.push("/");
+        setShowFacturaImpresa(true);
       }, 2000);
 
       return () => clearTimeout(timer);
@@ -100,6 +102,15 @@ function ResultadoRTO() {
   const handlePrint = () => {
     setShowPreview(false);
     setIsLoading(true);
+  };
+
+  const handleAcceptFacturaImpresa = () => {
+    setShowFacturaImpresa(false); // Oculta FacturaImpresa
+    onClose(); // Cierra el modal
+  };
+
+  const onClose = () => {
+    router.push("/resultados");
   };
 
   if (!resultado || !vehiculo) {
@@ -244,6 +255,11 @@ function ResultadoRTO() {
                   </AlertDialogContent>
                 </AlertDialog>
               )}
+              <AlertDialog open={showFacturaImpresa}>
+                <AlertDialogContent>
+                  <FacturaImpresa onAccept={handleAcceptFacturaImpresa} />
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </div>
         </CardContent>

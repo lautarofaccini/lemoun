@@ -78,15 +78,6 @@ function Navbar() {
                   </ul>
                 )}
               </li>
-              {/* Botón "Cerrar Sesión" visible en dispositivos más grandes */}
-              <li className="hidden lg:block">
-                <Link
-                  className="w-full text-xl font-bold px-4 py-2 border border-gray-300 rounded-lg text-center hover:bg-gray-800 transition-colors"
-                  href="/logout"
-                >
-                  Cerrar Sesión
-                </Link>
-              </li>
             </>
           )}
         </ul>

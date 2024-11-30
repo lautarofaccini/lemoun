@@ -7,7 +7,7 @@ function FacturaImpresa({ onAccept }) {
     <div className="container mx-auto py-10 flex justify-center">
       <Card className="w-full max-w-md bg-gray-900 text-white">
         <CardContent>
-          <h1>¡Factura impresa correctamente!</h1>
+          <h1>¡Impresión realizada correctamente!</h1>
           <p>Verifique la impresora</p>
           <Button variant="outline" onClick={onAccept}>
             Aceptar
