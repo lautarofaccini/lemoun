@@ -61,9 +61,6 @@ function Turnos() {
 
   return (
     <div className="h-full flex flex-col justify-center items-center">
-      <Button variant="outline" onClick={() => router.push("/")}>
-        Volver
-      </Button>
       <h1 className="text-5xl mb-7 py-5">Buscar Turnos</h1>
       <div className="mb-6 w-full max-w-md flex items-center gap-4">
         <input
@@ -103,12 +100,24 @@ function Turnos() {
                 <strong>Precio:</strong> ${turno.precio.toFixed(2)}
               </p>
             </div>
+            <div className="text-right">
+                  <Button
+                    onClick={() =>
+                      router.push(`/turnos/${turno.patente}`)
+                    }
+                  >
+                    Ver
+                  </Button>
+                </div>
           </li>
         ))}
         {sortedTurnos.length === 0 && (
           <p className="text-center text-gray-500">No se encontraron turnos.</p>
         )}
       </ul>
+      <Button variant="outline" onClick={() => router.back()}>
+        Volver
+      </Button>
     </div>
   );
 }
